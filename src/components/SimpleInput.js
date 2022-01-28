@@ -11,6 +11,11 @@ const SimpleInput = (props) => {
     const formSubmissionHandler = (event) => {
       event.preventDefault();
 
+      if (enteredName.trim() === "") {
+          return;
+      }
+
+
       console.log(enteredName);
 
       // ref can be better if we check value on form submission
