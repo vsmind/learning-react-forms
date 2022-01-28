@@ -11,24 +11,33 @@ const SimpleInput = (props) => {
     }
 
     const formSubmissionHandler = (event) => {
-      event.preventDefault();
+        event.preventDefault();
 
-      setEnteredNameIsTouched(true);
+        setEnteredNameIsTouched(true);
 
-      if (enteredName.trim() === "") {
-          setEnteredNameIsValid(false);
-          return;
-      }
+        if (enteredName.trim() === "") {
+            setEnteredNameIsValid(false);
+            return;
+        }
 
-      setEnteredNameIsValid(true);
+        setEnteredNameIsValid(true);
 
-      console.log(enteredName);
+        console.log(enteredName);
 
-      // ref can be better if we check value on form submission
-      const enteredValue = nameInputRef.current.value;
-      console.log(enteredValue);
+        // ref can be better if we check value on form submission
+        const enteredValue = nameInputRef.current.value;
+        console.log(enteredValue);
 
-      setEnteredName("");
+        setEnteredName("");
+    }
+
+    const nameInputBlurHandler = (event) => {
+        setEnteredNameIsTouched(true);
+
+        if (enteredName.trim() === "") {
+            setEnteredNameIsValid(false);
+            return;
+        }
     }
 
     const nameInputIsInvalid = !enteredNameIsValid && enteredNameIsTouched;
@@ -36,17 +45,22 @@ const SimpleInput = (props) => {
     const nameInputClasses = !nameInputIsInvalid ? 'form-control' : 'form-control invalid';
 
     return (
-    <form onSubmit={formSubmissionHandler}>
-      <div className={nameInputClasses}>
-        <label htmlFor='name'>Your Name</label>
-        <input type='text' id='name' onChange={nameInputChangeHandler} ref={nameInputRef} value={enteredName}/>
-          {nameInputIsInvalid && <p className="error-text">Entered name must not be empty.</p>}
-      </div>
-      <div className="form-actions">
-        <button>Submit</button>
-      </div>
-    </form>
-  );
+        <form onSubmit={formSubmissionHandler}>
+            <div className={nameInputClasses}>
+                <label htmlFor='name'>Your Name</label>
+                <input type='text'
+                       id='name'
+                       onChange={nameInputChangeHandler}
+                       ref={nameInputRef}
+                       value={enteredName}
+                       onBlur={nameInputBlurHandler}/>
+                {nameInputIsInvalid && <p className="error-text">Entered name must not be empty.</p>}
+            </div>
+            <div className="form-actions">
+                <button>Submit</button>
+            </div>
+        </form>
+    );
 };
 
 export default SimpleInput;
